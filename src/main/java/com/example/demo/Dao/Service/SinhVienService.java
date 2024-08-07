@@ -16,8 +16,8 @@ public class SinhVienService {
     public List<SinhVien> getAllStudents() {
         return sinhviendao.findAll();
     }
-    public void addSV(SinhVien sv) {
-		sinhviendao.saveAndFlush(sv);
+    public SinhVien addSV(SinhVien sv) {
+		return sinhviendao.saveAndFlush(sv);
 	}
     public void deleteByID(int id) {
     	sinhviendao.deleteById(id);
