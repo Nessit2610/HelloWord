@@ -1,4 +1,4 @@
-package com.example.demo.Dao.Service;
+package com.example.demo.Service;
 
 import java.util.List;
 
