@@ -1,4 +1,4 @@
-package com.example.demo.WebConfig;
+package com.example.demo.Config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -6,8 +6,12 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 
 import com.example.demo.Service.UserService;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 
 @Configuration
@@ -25,14 +29,14 @@ public class SecurityConfiguration {
 		daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
 		return daoAuthenticationProvider;
 	}
-	@Bean
+	 @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http.authorizeHttpRequests(
             configurer->configurer
                     .anyRequest().authenticated()
         ).formLogin(
-                form->form.loginPage("/Login")
-                          .loginProcessingUrl("/authenticateTheUser")
+                form->form.loginPage("/login")
+                          .loginProcessingUrl("/authenticateTheUser").successHandler(successHandler())
                           .permitAll()
         ).logout(
                 logout->logout.permitAll()
@@ -40,5 +44,18 @@ public class SecurityConfiguration {
 
         return http.build();
     }
+	 	@Bean
+	    public SimpleUrlAuthenticationSuccessHandler successHandler() {
+	        return new SimpleUrlAuthenticationSuccessHandler() {
+	            @Override
+	            protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response) {
+	                String targetUrl = (String) request.getSession().getAttribute("url_prior_login");
+	                if (targetUrl != null) {
+	                    return targetUrl;
+	                }
+	                return super.determineTargetUrl(request, response);
+	            }
+	        };
+	    }
 	
 }

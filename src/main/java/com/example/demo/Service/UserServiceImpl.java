@@ -32,21 +32,6 @@ public class UserServiceImpl implements UserService {
 		this.roleRepository = roleRepository;
 	}
 	
-//	@PostConstruct
-//	public void insertUser() {
-//		User user1 = new User();
-//		user1.setUsername("tien");
-//		user1.setPassword("$2a$12$0Scqo0Fyl/ggfJHEGnIfcOPqKPXBPgta3S7aB1fkC3tmxG3WeKxp2");
-//		user1.setEnable(true);
-//		Role role1 = new Role();
-//		role1.setName("ROLE_ADMIN");
-//		Collection<Role> roles = new ArrayList<>();
-//		roles.add(role1);
-//		user1.setRoles(roles);
-//		userRepository.save(user1);
-//	}
-	
-	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userRepository.findByUsername(username);
@@ -60,6 +45,13 @@ public class UserServiceImpl implements UserService {
 	private Collection<? extends GrantedAuthority> rolesToAuthorities(Collection<Role> roles){
 		return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
 		
+	}
+
+	@Override
+	public User findByUsername(String username) {
+		User us = new User();
+		us = userRepository.findByUsername(username);
+		return us;
 	}
 	
 

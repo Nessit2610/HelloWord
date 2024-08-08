@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login/Register Panel</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Mukta');
+
+        :root {
+            --PrimaryColor: hsl(199, 100%, 33%);
+            --SecondaryColor: hsl(187, 85%, 43%);
+            --gradientColor: linear-gradient(to right, hsl(187, 85%, 43%), hsl(199, 100%, 33%));
+            --whiteColor: hsl(0, 0%, 100%);
+            --blackColor: hsl(201, 33%, 16%);
+            --textColor: hsl(240, 4%, 36%);
+            --whiteColorDeam: hsl(0, 0%, 93%);
+            --greyText: rgb(190, 190, 190);
+            --inputColor: rgb(239, 239, 239);
+            --bodyColor: rgb(240, 240, 246);
+            --cardBG: rgb(225, 225, 235);
+            --primary: #fe2c55;
+            --black: #000;
+            --text-color: #333;
+            --default-layout-header-height: 60px;
+            --default-layout-width: 1150px;
+        }
+        body {
+            font-family: 'Mukta', sans-serif;
+            height: 100vh;
+            min-height: 550px;
+            background-image: url(http://www.planwallpaper.com/static/images/Free-Wallpaper-Nature-Scenes.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow-y: hidden;
+        }
+        h2 {
+            font-size: 35px;
+        }
+
+        .login-reg-panel {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            width: 70%;
+            height: 400px;
+            background: var(--gradientColor);
+            z-index: 1;
+            border-radius: 20px;
+        }
+
+        .login-reg-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('../../../Assets/img(2).webp');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.3;
+            filter: blur(2px);
+            z-index: -1;
+        }
+
+        a {
+            text-decoration: none;
+            color: #444444;
+        }
+        .white-panel {
+            background-color: rgba(255, 255, 255, 1);
+            height: 500px;
+            position: absolute;
+            top: -50px;
+            width: 50%;
+            right: calc(50% - 50px);
+            transition: 0.3s ease-in-out;
+            z-index: 0;
+            box-shadow: 0 0 20px 3px #05103921;
+            border-radius: 20px;
+        }
+        .login-reg-panel input[type='radio'] {
+            position: relative;
+            display: none;
+        }
+        .login-reg-panel {
+            color: #ffffff;
+            border-radius: 20px;
+        }
+        .login-reg-panel #label-login,
+        .login-reg-panel #label-register {
+            border: 1px solid var(--SecondaryColor);
+            background-color: var(--SecondaryColor);
+            padding: 5px 5px;
+            width: 150px;
+            display: block;
+            align-items: center;
+            text-align: center;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 18px;
+            border-radius: 10px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .login-reg-panel #label-login:hover,
+        .login-reg-panel #label-register:hover {
+            background-color: var(--whiteColor);
+            color: var(--PrimaryColor);
+        }
+        .login-info-box {
+            width: 30%;
+            padding: 0 50px;
+            top: 20%;
+            left: 0;
+            position: absolute;
+            text-align: left;
+            border-radius: 10px;
+        }
+        .register-info-box {
+            width: 30%;
+            padding: 0 50px;
+            top: 20%;
+            right: 0;
+            position: absolute;
+            text-align: left;
+        }
+        .right-log {
+            right: 50px !important;
+        }
+
+        .login-show,
+        .register-show {
+            z-index: 1;
+            display: none;
+            opacity: 0;
+            transition: 0.3s ease-in-out;
+            color: #242424;
+            text-align: left;
+            padding: 50px;
+        }
+        .show-log-panel {
+            display: block;
+            opacity: 0.9;
+        }
+        .login-show input[type='text'],
+        .login-show input[type='password'] {
+            width: 100%;
+            display: block;
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #b5b5b5;
+            outline: none;
+        }
+        .login-show input[type='button'] {
+            max-width: 150px;
+            width: 100%;
+            background: var(--gradientColor);
+            color: #f9f9f9;
+            border: none;
+            padding: 10px;
+            text-transform: uppercase;
+            border-radius: 2px;
+            float: right;
+            cursor: pointer;
+            border-radius: 7px;
+        }
+        .login-show a {
+            display: inline-block;
+            padding: 10px 0;
+        }
+
+        .register-show input[type='text'],
+        .register-show input[type='password'] {
+            width: 100%;
+            display: block;
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #b5b5b5;
+            outline: none;
+        }
+        .register-show input[type='button'] {
+            max-width: 150px;
+            width: 100%;
+            background: var(--gradientColor);
+            color: #f9f9f9;
+            border: none;
+            padding: 10px;
+            text-transform: uppercase;
+            border-radius: 2px;
+            float: right;
+            cursor: pointer;
+            border-radius: 7px;
+        }
+        .credit {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            color: #3b3b25;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            text-transform: uppercase;
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            z-index: 99;
+        }
+        a {
+            text-decoration: none;
+            color: #2c7715;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-reg-panel">
+        <div class="login-info-box">
+            <h2>Bạn đã có tài khoản?</h2>
+            <label id="label-register" for="log-reg-show">
+                Login
+            </label>
+            <input
+                type="radio"
+                name="active-log-panel"
+                id="log-reg-show"
+            />
+        </div>
+
+        <div class="register-info-box">
+            <h2>Bạn chưa có tài khoản?</h2>
+            <label id="label-login" for="log-login-show">
+                Register
+            </label>
+            <input
+                type="radio"
+                name="active-log-panel"
+                id="log-login-show"
+            />
+        </div>
+
+        <div class="white-panel">
+            <div class="login-show">
+                <h2>LOGIN</h2>
+                <input type="text" placeholder="Email" />
+                <input type="password" placeholder="Password" />
+                <input type="button" value="Login" />
+                <a href="/">Forgot password?</a>
+            </div>
+            <div class="register-show">
+                <h2>REGISTER</h2>
+                <input type="text" placeholder="Email" />
+                <input type="password" placeholder="Password" />
+                <input type="password" placeholder="Confirm Password" />
+                <input type="button" value="Register" />
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelector('.login-info-box').style.display = 'none';
+            document.querySelector('.login-show').classList.add('show-log-panel');
+
+            const handleRadioChange = () => {
+                if (document.getElementById('log-login-show').checked) {
+                    document.querySelector('.register-info-box').style.display = 'none';
+                    document.querySelector('.login-info-box').style.display = 'block';
+
+                    document.querySelector('.white-panel').classList.add('right-log');
+                    document.querySelector('.register-show').classList.add('show-log-panel');
+                    document.querySelector('.login-show').classList.remove('show-log-panel');
+                } else if (document.getElementById('log-reg-show').checked) {
+                    document.querySelector('.register-info-box').style.display = 'block';
+                    document.querySelector('.login-info-box').style.display = 'none';
+
+                    document.querySelector('.white-panel').classList.remove('right-log');
+                    document.querySelector('.login-show').classList.add('show-log-panel');
+                    document.querySelector('.register-show').classList.remove('show-log-panel');
+                }
+            };
+
+            document.getElementById('log-login-show').addEventListener('change', handleRadioChange);
+            document.getElementById('log-reg-show').addEventListener('change', handleRadioChange);
+        });
+    </script>
+</body>
+</html>

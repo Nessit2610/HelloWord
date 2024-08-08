@@ -6,4 +6,5 @@ import com.example.demo.Entity.User;
 
 
 public interface UserService extends UserDetailsService {
+	public User findByUsername(String username);
 }
