@@ -10,9 +10,13 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 
 import com.example.demo.Service.UserService;
 
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
+import java.io.IOException;
 
 @Configuration
 public class SecurityConfiguration {
@@ -36,7 +40,8 @@ public class SecurityConfiguration {
                     .anyRequest().authenticated()
         ).formLogin(
                 form->form.loginPage("/login")
-                          .loginProcessingUrl("/authenticateTheUser").successHandler(successHandler())
+                          .loginProcessingUrl("/authenticateTheUser")
+                          .successHandler(new CustomAuthenticationSuccessHandler())
                           .permitAll()
         ).logout(
                 logout->logout.permitAll()
@@ -44,18 +49,5 @@ public class SecurityConfiguration {
 
         return http.build();
     }
-	 	@Bean
-	    public SimpleUrlAuthenticationSuccessHandler successHandler() {
-	        return new SimpleUrlAuthenticationSuccessHandler() {
-	            @Override
-	            protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response) {
-	                String targetUrl = (String) request.getSession().getAttribute("url_prior_login");
-	                if (targetUrl != null) {
-	                    return targetUrl;
-	                }
-	                return super.determineTargetUrl(request, response);
-	            }
-	        };
-	    }
-	
+	 	
 }
