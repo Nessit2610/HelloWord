@@ -32,11 +32,12 @@ public class SinhVienController {
 	    SinhVien newStudent = service.addSV(sv);
 	    return ResponseEntity.status(HttpStatus.CREATED).body(newStudent);
 	}
-
+	
 	@DeleteMapping("/xoasv/{id}")
 	public ResponseEntity<List<SinhVien>> deleteById(@PathVariable("id") int id) {
 	    service.deleteByID(id);
 	    List<SinhVien> updatedStudents = service.getAllStudents();
 	    return ResponseEntity.ok(updatedStudents);
 	}
+	
 }
